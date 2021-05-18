@@ -7,13 +7,38 @@ describe("get user service", () => {
     
 	test("should return user when API call is successful", async () => {
 	
-        expect(true).toBe(false);
+        axios.get.mockResolvedValue({
+            data: {
+                    name: "Ubuntu",
+                    age: 22
+                }
+        })
+
+        const user = await getUser()
+        expect(user).toEqual({
+            name: "Ubuntu",
+            age: 22
+
+        });
 
 	});
 
     test("should return errorMessage when API is call fails", async () => {
        
-        expect(true).toBe(false);
+        axios.get.mockRejectedValue({
+            response: {
+                data: {
+                    errorMessage: "404 not found"
+                }
+            }
+        })
+
+        axios.isAxiosError.mockImplementation((_) => true)
+
+        const error = await getUser()
+        expect(error).toEqual({
+            errorMessage: "404 not found"
+        });
         
     })
 });
