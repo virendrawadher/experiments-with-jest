@@ -41,4 +41,15 @@ describe("get user service", () => {
         });
         
     })
+
+    test.only("should return errorMessage when axios error is not thier", async () => {
+
+        const error = await getUser()
+
+        expect(error).toEqual({
+            errorMessage: "something went wrong!"
+        })
+
+
+    })
 });
